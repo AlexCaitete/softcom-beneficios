@@ -1,0 +1,24 @@
+:root {
+  /* Cores da marca Softcom  */
+  --amarelo-softcom: #FFC700;
+  --fundo-escuro: #1A1C20;
+  --texto-claro: #FFFFFF;
+  --texto-escuro: #333333;
+  --fundo-claro: #F5F5F5;
+  
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--fundo-claro);
+  color: var(--texto-escuro);
+}
+
+/* Reset para ajudar no layout */
+* {
+  box-sizing: border-box;
+}
