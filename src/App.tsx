@@ -1,11 +1,12 @@
 import './App.css'
+import Home from './components/softcom-home/Softcom'
+import { BrowserRouter } from 'react-router'
 
 function App() {
   return (
-    <div>
-      <h1>Projeto Softcom </h1>
-      <p>Nossa base está pronta!</p>
-    </div>
+    <BrowserRouter>
+        <Home />
+    </BrowserRouter>
   )
 }
 
