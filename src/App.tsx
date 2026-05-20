@@ -1,14 +1,11 @@
 import "./tailwind.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "sonner";
 
 import { Layout } from "./components/Layout";
-import { Dashboard } from "./components/Dashboard";
-import { EmployeeList } from "./components/EmployeeList";
-import { TasksSection } from "./components/TasksSection";
-import { RewardsSection } from "./components/RewardsSection";
-import { PartnersProposals } from "./components/PartnersProposals";
-import Footer from "./components/softcom-home/Footer";
-import { Toaster } from "sonner";
+// Adicione esta linha:
+import { AdminPage } from "./pages/AdminPage";
+import { EmployeePage } from "./pages/EmployeePage";
 
 function App() {
   return (
@@ -16,19 +13,8 @@ function App() {
       <Toaster position="top-right" richColors />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route
-            path="admin"
-            element={
-              <>
-                <Dashboard />
-                <EmployeeList />
-                <TasksSection />
-                <RewardsSection />
-                <PartnersProposals />
-                <Footer />
-              </>
-            }
-          />
+          <Route path="admin" element={<AdminPage />} />
+          <Route path="meu-perfil" element={<EmployeePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
