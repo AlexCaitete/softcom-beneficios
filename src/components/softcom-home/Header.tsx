@@ -15,7 +15,7 @@ export default function Header(){
             <Link to="/login" className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors">
               Portal do Cliente
             </Link>
-            <Link to="/login-funcionario" className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors">
+            <Link to="/funcionario-page" className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors">
               Portal do Funcionário
             </Link>
           </div>
