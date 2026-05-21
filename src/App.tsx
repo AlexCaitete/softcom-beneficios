@@ -2,9 +2,9 @@ import "./tailwind.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 
-import { Layout } from "./components/Layout";
+import { Layout } from "./components/adm-page/Layout";
 // Adicione esta linha:
-import { AdminPage } from "./pages/AdminPage";
+import { AdminPage } from "./components/adm-page/AdminPage";
 import { EmployeePage } from "./pages/EmployeePage";
 
 function App() {
