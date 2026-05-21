@@ -5,15 +5,9 @@ import Home from './components/softcom-home/Softcom';
 import { Toaster } from "sonner";
 
 import { Layout } from "./components/adm-page/Layout";
-<<<<<<< HEAD
-// Adicione esta linha:
-import { AdminPage } from "./components/adm-page/AdminPage";
-import { EmployeePage } from "./pages/EmployeePage";
-=======
 
 import { AdminPage } from "./components/adm-page/AdminPage";
-import { EmployeePage } from "./components/funcionario-page/EmployeePage";
->>>>>>> origin/Branch-Myla
+
 
 function App() {
   return (
