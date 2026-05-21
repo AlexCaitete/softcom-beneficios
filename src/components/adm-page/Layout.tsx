@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Users, TrendingUp, Gift, LogOut } from 'lucide-react';
 // Caminho ajustado para onde a sua logo realmente está:
-import logoSoffcom from "../assets/logoBranca.png";
+import logoSoffcom from "../../assets/logoBranca.png";
 
 export function Layout() {
   const location = useLocation();

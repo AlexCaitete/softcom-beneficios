@@ -7,7 +7,7 @@ import { Toaster } from "sonner";
 import { Layout } from "./components/adm-page/Layout";
 
 import { AdminPage } from "./components/adm-page/AdminPage";
-
+import { EmployeePage } from "./components/funcionario-page/EmployeePage";
 
 function App() {
   return (
