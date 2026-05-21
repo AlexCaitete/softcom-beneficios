@@ -1,5 +1,6 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Users, TrendingUp, Gift, LogOut } from 'lucide-react';
+// Caminho ajustado para onde a sua logo realmente está:
 import logoSoffcom from "../../assets/logoBranca.png";
 
 export function Layout() {
@@ -74,6 +75,7 @@ export function Layout() {
       </header>
 
       <main>
+        {/* É aqui que as outras páginas vão ser renderizadas! */}
         <Outlet />
       </main>
     </div>
