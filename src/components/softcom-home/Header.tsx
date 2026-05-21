@@ -12,7 +12,7 @@ export default function Header(){
             />
           </Link>
           <div className="flex gap-3">
-            <Link to="/login" className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors">
+            <Link to="/" className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors">
               Portal do Cliente
             </Link>
             <Link to="/funcionario-page" className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors">
