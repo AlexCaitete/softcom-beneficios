@@ -14,7 +14,7 @@ export default function Apresentacao(){
               Somos a tecnologia que <span className="bg-[#FFD700] p-[3px]">IMPULSIONA</span> o comércio!
             </h1>
             <p className="text-[0.96rem] text-gray-600 font-medium leading-relaxed">
-             Bem-vindo à Softcom! É um prazer ter você conosco! Na Softcom, acreditamos que a tecnologia é uma ferramenta poderosa para transformar ideias em soluções inovadoras. Nosso compromisso é oferecer serviços de qualidade, sempre com foco em eficiência, inovação e excelência no atendimento.
+             <span className="underline decoration-pink-500">Bem-vindo à Softcom!</span> É um prazer ter você conosco! Na Softcom, acreditamos que a tecnologia é uma ferramenta poderosa para transformar ideias em soluções inovadoras. Nosso compromisso é oferecer serviços de qualidade, sempre com foco em eficiência, inovação e excelência no atendimento.
             Aqui, você encontrará uma equipe dedicada, pronta para entender suas necessidades e entregar resultados que realmente fazem a diferença. Seja você um cliente, parceiro ou colaborador, saiba que sua presença é muito importante para nós.
             Conte com a Softcom para caminhar ao seu lado rumo ao sucesso! Seja muito bem-vindo!
             </p>
