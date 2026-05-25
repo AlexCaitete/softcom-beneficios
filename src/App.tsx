@@ -8,7 +8,7 @@ import { Layout } from "./components/adm-page/Layout";
 import { AdminPage } from "./components/adm-page/AdminPage";
 import { EmployeePage } from "./components/funcionario-page/EmployeePage";
 
-// 👇 SUAS NOVAS IMPORTAÇÕES DA PASTA EXCLUSIVA 👇
+//  NOVAS IMPORTAÇÕES DA PASTA EXCLUSIVA 👇
 import { BeneficiosLayout } from "./components/beneficioclientes-page/BeneficiosLayout";
 import { MeusBeneficios } from "./components/beneficioclientes-page/MeusBeneficios";
 import { Referrals } from "./components/beneficioclientes-page/Referrals";
@@ -21,9 +21,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        {/* === ÁREA DE BENEFÍCIOS DO CLIENTE (Sua nova estrutura do Figma) === */}
+        {/* === ÁREA DE BENEFÍCIOS DO CLIENTE  === */}
         <Route element={<BeneficiosLayout />}>
-          {/* Agora apontando para a sua nova tela de Benefícios correta */}
+          {/* Agora apontando para nova tela de Benefícios  */}
           <Route path="meus-beneficios" element={<MeusBeneficios />} />
           <Route path="vouchers" element={<Vouchers />} />
           <Route path="indicacoes" element={<Referrals />} />
