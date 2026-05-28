@@ -113,7 +113,6 @@ export function Referrals() {
 
   return (
     <div className="space-y-6">
-      {/* Header Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-gradient-to-br from-amber-400 to-amber-500 rounded-xl p-6 text-white shadow-lg">
           <div className="flex items-center justify-between">
@@ -194,26 +193,23 @@ export function Referrals() {
         </div>
       </div>
 
-      {/* Tabs */}
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="flex border-b border-gray-200">
           <button
             onClick={() => setActiveTab("indicar")}
-            className={`flex-1 py-4 px-6 text-center font-semibold transition-colors ${
-              activeTab === "indicar"
+            className={`flex-1 py-4 px-6 text-center font-semibold transition-colors ${activeTab === "indicar"
                 ? "bg-amber-400 text-gray-800 border-b-2 border-amber-400"
                 : "text-gray-600 hover:bg-gray-50"
-            }`}
+              }`}
           >
             Indicar Novo Cliente
           </button>
           <button
             onClick={() => setActiveTab("acompanhar")}
-            className={`flex-1 py-4 px-6 text-center font-semibold transition-colors ${
-              activeTab === "acompanhar"
+            className={`flex-1 py-4 px-6 text-center font-semibold transition-colors ${activeTab === "acompanhar"
                 ? "bg-amber-400 text-gray-800 border-b-2 border-amber-400"
                 : "text-gray-600 hover:bg-gray-50"
-            }`}
+              }`}
           >
             Acompanhar Indicações
           </button>

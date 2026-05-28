@@ -1,7 +1,6 @@
 export function Vouchers() {
   return (
     <div className="space-y-12">
-      {/* Vouchers Ativos */}
       <section>
         <div className="flex justify-between items-end mb-6">
           <div>
@@ -14,7 +13,6 @@ export function Vouchers() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Card 1 - SmartFit */}
           <div className="bg-[#10B981] rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
             <div className="flex justify-between items-start">
               <div className="flex gap-4">
@@ -41,7 +39,6 @@ export function Vouchers() {
             </div>
           </div>
 
-          {/* Card 2 - iFood */}
           <div className="bg-[#10B981] rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
             <div className="flex justify-between items-start">
               <div className="flex gap-4">
@@ -70,7 +67,6 @@ export function Vouchers() {
         </div>
       </section>
 
-      {/* Vouchers Disponíveis */}
       <section>
         <div className="flex justify-between items-end mb-6">
           <div>
