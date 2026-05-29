@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Referral {
   id: number;
@@ -15,6 +15,7 @@ export function Referrals() {
     "indicar",
   );
   const [showSuccess, setShowSuccess] = useState(false);
+  const [emailError, setEmailError] = useState("");
   const [formData, setFormData] = useState({
     nome: "",
     email: "",
@@ -22,43 +23,61 @@ export function Referrals() {
     empresa: "",
   });
 
-  const [referrals, setReferrals] = useState<Referral[]>([
-    {
-      id: 1,
-      nome: "Maria Santos",
-      email: "maria.santos@email.com",
-      telefone: "(11) 98765-4321",
-      status: "aprovado",
-      dataIndicacao: "2026-05-10",
-      recompensa: 300,
-    },
-    {
-      id: 2,
-      nome: "Pedro Oliveira",
-      email: "pedro.oliveira@email.com",
-      telefone: "(11) 91234-5678",
-      status: "em_analise",
-      dataIndicacao: "2026-05-18",
-      recompensa: 0,
-    },
-    {
-      id: 3,
-      nome: "Ana Costa",
-      email: "ana.costa@email.com",
-      telefone: "(11) 99876-5432",
-      status: "pendente",
-      dataIndicacao: "2026-05-20",
-      recompensa: 0,
-    },
-  ]);
+  const [referrals, setReferrals] = useState<Referral[]>(() => {
+    const savedReferrals = localStorage.getItem("@softcom:referrals");
+    return savedReferrals
+      ? JSON.parse(savedReferrals)
+      : [
+          {
+            id: 1,
+            nome: "Maria Santos",
+            email: "maria.santos@email.com",
+            telefone: "(11) 98765-4321",
+            status: "aprovado",
+            dataIndicacao: "2026-05-10",
+            recompensa: 300,
+          },
+          {
+            id: 2,
+            nome: "Pedro Oliveira",
+            email: "pedro.oliveira@email.com",
+            telefone: "(11) 91234-5678",
+            status: "em_analise",
+            dataIndicacao: "2026-05-18",
+            recompensa: 0,
+          },
+          {
+            id: 3,
+            nome: "Ana Costa",
+            email: "ana.costa@email.com",
+            telefone: "(11) 99876-5432",
+            status: "pendente",
+            dataIndicacao: "2026-05-20",
+            recompensa: 0,
+          },
+        ];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("@softcom:referrals", JSON.stringify(referrals));
+  }, [referrals]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setEmailError("");
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      setEmailError(
+        "Formato de e-mail inválido. Digite um e-mail correto (exemplo@dominio.com).",
+      );
+      return;
+    }
 
     const newReferral: Referral = {
       id: referrals.length + 1,
       nome: formData.nome,
-      email: formData.email,
+      email: formData.email.trim(),
       telefone: formData.telefone,
       status: "pendente",
       dataIndicacao: new Date().toISOString().split("T")[0],
@@ -72,6 +91,9 @@ export function Referrals() {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.name === "email" && emailError) {
+      setEmailError("");
+    }
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -197,19 +219,21 @@ export function Referrals() {
         <div className="flex border-b border-gray-200">
           <button
             onClick={() => setActiveTab("indicar")}
-            className={`flex-1 py-4 px-6 text-center font-semibold transition-colors ${activeTab === "indicar"
+            className={`flex-1 py-4 px-6 text-center font-semibold transition-colors ${
+              activeTab === "indicar"
                 ? "bg-amber-400 text-gray-800 border-b-2 border-amber-400"
                 : "text-gray-600 hover:bg-gray-50"
-              }`}
+            }`}
           >
             Indicar Novo Cliente
           </button>
           <button
             onClick={() => setActiveTab("acompanhar")}
-            className={`flex-1 py-4 px-6 text-center font-semibold transition-colors ${activeTab === "acompanhar"
+            className={`flex-1 py-4 px-6 text-center font-semibold transition-colors ${
+              activeTab === "acompanhar"
                 ? "bg-amber-400 text-gray-800 border-b-2 border-amber-400"
                 : "text-gray-600 hover:bg-gray-50"
-              }`}
+            }`}
           >
             Acompanhar Indicações
           </button>
@@ -279,15 +303,24 @@ export function Referrals() {
                       E-mail *
                     </label>
                     <input
-                      type="email"
+                      type="text"
                       id="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none transition"
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none transition ${
+                        emailError
+                          ? "border-red-500 ring-2 ring-red-200"
+                          : "border-gray-300"
+                      }`}
                       placeholder="email@exemplo.com"
                       required
                     />
+                    {emailError && (
+                      <p className="text-red-500 text-xs mt-1.5 font-semibold">
+                        {emailError}
+                      </p>
+                    )}
                   </div>
 
                   <div>
