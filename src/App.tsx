@@ -12,14 +12,15 @@ import { MeusBeneficios } from "./components/beneficioclientes-page/MeusBenefici
 import { Referrals } from "./components/beneficioclientes-page/Referrals";
 import { Vouchers } from "./components/beneficioclientes-page/Vouchers";
 
+import { ChatBot } from "./components/chat-bot/ChatBot";
 function App() {
   return (
     <BrowserRouter>
       <Toaster position="top-right" richColors />
+      <ChatBot />
       <Routes>
         <Route path="/" element={<Home />} />
 
-        
         <Route element={<BeneficiosLayout />}>
           <Route path="meus-beneficios" element={<MeusBeneficios />} />
           <Route path="vouchers" element={<Vouchers />} />
@@ -30,7 +31,6 @@ function App() {
           <Route path="admin" element={<AdminPage />} />
           <Route path="meu-perfil" element={<EmployeePage />} />
         </Route>
-
 
         <Route
           path="/funcionario-page"
