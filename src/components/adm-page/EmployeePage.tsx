@@ -1,4 +1,5 @@
 import { Target, TrendingUp, Award, Star, CheckCircle2, Clock, AlertCircle, Trophy, Gift } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export function EmployeePage() {
   // Dados simulados do funcionário logado
@@ -15,41 +16,28 @@ export function EmployeePage() {
     nextLevelPoints: 3000
   };
 
-  const myTasks = [
-    {
-      id: 1,
-      title: 'Fechar 10 vendas no mês',
-      progress: 80,
-      current: 8,
-      goal: 10,
-      status: 'em-andamento',
-      deadline: '2026-05-31',
-      points: 500,
-      prize: 'Bônus R$ 500'
-    },
-    {
-      id: 2,
-      title: 'Treinar 3 novos colaboradores',
-      progress: 100,
-      current: 3,
-      goal: 3,
-      status: 'concluida',
-      deadline: '2026-05-15',
-      points: 400,
-      prize: 'Dia de folga extra'
-    },
-    {
-      id: 3,
-      title: 'Aumentar ticket médio em 20%',
-      progress: 65,
-      current: 13,
-      goal: 20,
-      status: 'em-andamento',
-      deadline: '2026-05-28',
-      points: 600,
-      prize: 'Vale presente R$ 300'
-    }
-  ];
+  // Estado dinâmico para as tarefas
+  const [myTasks, setMyTasks] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Função que busca os dados "globais" do LocalStorage
+    const loadTasks = () => {
+      const saved = localStorage.getItem("@softcom:tasks");
+      if (saved) {
+        const allTasks = JSON.parse(saved);
+        // Filtramos para mostrar apenas as tarefas que pertencem à 'Ana Silva'
+        const filtered = allTasks.filter((t: any) => t.employee === employee.name);
+        setMyTasks(filtered);
+      }
+    };
+
+    loadTasks();
+
+    // Isso garante que se você mudar o Admin em uma aba, 
+    // esta aba aqui atualize automaticamente sem dar F5!
+    window.addEventListener('storage', loadTasks);
+    return () => window.removeEventListener('storage', loadTasks);
+  }, [employee.name]);
 
   const myRewards = [
     {

@@ -1,5 +1,6 @@
 import { Package, Store, Calendar, TrendingUp, Check, X, Eye } from 'lucide-react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 function ConfirmModal({ message, onConfirm, onCancel }: { message: string; onConfirm: () => void; onCancel: () => void }) {
   return (
@@ -121,9 +122,32 @@ export function PartnersProposals() {
   const [rejectingId, setRejectingId] = useState<number | null>(null);
 
   const handleApprove = (id: number) => {
-    setProposals(proposals.map(p =>
-      p.id === id ? { ...p, status: 'aprovado' } : p
-    ));
+    // Busca a proposta selecionada para converter em recompensa
+    const proposal = proposals.find(p => p.id === id);
+    
+    if (proposal) {
+      // 1. Atualiza o status local da proposta
+      setProposals(proposals.map(p =>
+        p.id === id ? { ...p, status: 'aprovado' } : p
+      ));
+
+      // Converte os dados da proposta comercial no formato do Catálogo de Recompensas
+      const newReward = {
+        id: Date.now(),
+        title: proposal.discountTitle,
+        cost: proposal.minPoints,
+        description: proposal.description
+      };
+
+      // Persistência: Recupera o catálogo atual, adiciona o novo item e salva de volta
+      const savedRewards = localStorage.getItem("@softcom:catalogRewards");
+      const currentRewards = savedRewards ? JSON.parse(savedRewards) : [];
+      localStorage.setItem("@softcom:catalogRewards", JSON.stringify([...currentRewards, newReward]));
+      
+      // Dispara o evento que avisa os outros componentes (como o RewardsSection) para atualizarem
+      window.dispatchEvent(new Event("local-storage-update"));
+      toast.success("Proposta aprovada e adicionada ao catálogo!");
+    }
     setShowModal(false);
   };
 

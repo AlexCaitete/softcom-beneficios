@@ -1,6 +1,7 @@
 import { Star, Target, TrendingUp, Trophy} from "lucide-react";
+import { useState, useEffect } from "react";
 
-const employee = {
+const defaultEmployee = {
     name: "Ana Silva",
     role: "Gerente de Vendas",
     avatar: "AS",
@@ -14,6 +15,23 @@ const employee = {
 };
 
 export function StatsCards() {
+    const [employee, setEmployee] = useState(defaultEmployee);
+
+    useEffect(() => {
+        const loadEmployee = () => {
+            const saved = localStorage.getItem("@softcom:employee");
+            if (saved) setEmployee(JSON.parse(saved));
+        };
+
+        loadEmployee();
+        window.addEventListener("storage", loadEmployee);
+        window.addEventListener("local-storage-update", loadEmployee);
+        return () => {
+            window.removeEventListener("storage", loadEmployee);
+            window.removeEventListener("local-storage-update", loadEmployee);
+        };
+    }, []);
+
     return (
         <section className="py-8">
         <div className="max-w-7xl mx-auto px-6">

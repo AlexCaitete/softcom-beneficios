@@ -1,40 +1,6 @@
 import { CheckCircle2, AlertCircle, Clock } from "lucide-react";
-
-const myTasks = [
-    {
-      id: 1,
-      title: "Fechar 10 vendas no mês",
-      progress: 80,
-      current: 8,
-      goal: 10,
-      status: "em-andamento",
-      deadline: "2026-05-31",
-      points: 500,
-      prize: "Bônus R$ 500",
-    },
-    {
-      id: 2,
-      title: "Treinar 3 novos colaboradores",
-      progress: 100,
-      current: 3,
-      goal: 3,
-      status: "concluida",
-      deadline: "2026-05-15",
-      points: 400,
-      prize: "Dia de folga extra",
-    },
-    {
-      id: 3,
-      title: "Aumentar ticket médio em 20%",
-      progress: 65,
-      current: 13,
-      goal: 20,
-      status: "em-andamento",
-      deadline: "2026-05-28",
-      points: 600,
-      prize: "Vale presente R$ 300",
-    },
-];
+import { useState, useEffect } from "react";
+import { employee } from "./ProfileHeader";
 
 const getStatusStyles = (status: string) => {
     switch (status) {
@@ -73,7 +39,77 @@ const getStatusStyles = (status: string) => {
     }
   };
 
+// 1. DEFINIÇÃO DAS TAREFAS PADRÃO: Criamos esta lista para que, no primeiro acesso,
+// o funcionário não veja uma tela vazia antes do Admin salvar algo.
+const defaultTasksForAna = [
+    {
+      id: 1,
+      title: "Fechar 10 vendas no mês",
+      progress: 80,
+      current: 8,
+      goal: 10,
+      status: "em-andamento",
+      deadline: "2026-05-31",
+      points: 500,
+      prize: "Bônus R$ 500",
+    },
+    {
+      id: 4,
+      title: "Treinar 3 novos colaboradores",
+      progress: 100,
+      current: 3,
+      goal: 3,
+      status: "concluida",
+      deadline: "2026-05-15",
+      points: 400,
+      prize: "Dia de folga extra",
+    },
+    {
+      id: 5,
+      title: "Aumentar ticket médio em 20%",
+      progress: 65,
+      current: 13,
+      goal: 20,
+      status: "em-andamento",
+      deadline: "2026-05-28",
+      points: 600,
+      prize: "Vale presente R$ 300",
+    },
+];
+
 export function MyTasks() {
+    // 1. ESTADO INICIAL: Aqui é o segredo. Se você reiniciar o site e o LocalStorage
+    // estiver vazio, ele não deve ficar em branco, mas sim carregar as tarefas que 
+    // o sistema espera que existam por padrão.
+    const [myTasks, setMyTasks] = useState<any[]>([]);
+
+    useEffect(() => {
+        const loadTasks = () => {
+            const saved = localStorage.getItem("@softcom:tasks");
+            
+            if (saved) {
+                // Se o "banco de dados" existe, mostramos exatamente o que o Admin definiu.
+                const allTasks = JSON.parse(saved);
+                const filtered = allTasks.filter((t: any) => t.employee === employee.name);
+                setMyTasks(filtered);
+            } else {
+                // Se for o primeiro acesso ao site, carregamos o padrão para não ver a tela vazia.
+                setMyTasks(defaultTasksForAna);
+            }
+        };
+
+        // 3. EXECUÇÃO IMEDIATA: Roda assim que a tela abre.
+        loadTasks();
+
+        // 4. SINCRONIZAÇÃO ENTRE ABAS: Se você tiver a aba do Admin aberta e deletar
+        // uma tarefa lá, esse evento 'storage' avisa esta aba para recarregar os dados
+        // sem que o usuário precise dar F5.
+        window.addEventListener("storage", loadTasks);
+        
+        // Limpeza do ouvinte ao sair da tela para não gastar memória.
+        return () => window.removeEventListener("storage", loadTasks);
+    }, []);
+
     return (
         <section className="py-8">
         <div className="max-w-7xl mx-auto px-6">

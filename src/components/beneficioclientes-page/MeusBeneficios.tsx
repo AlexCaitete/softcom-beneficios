@@ -86,7 +86,7 @@ export function MeusBeneficios() {
             </div>
             <div className="p-5 flex-1 flex flex-col">
               <span className="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-1 rounded w-fit mb-2 uppercase tracking-wide">Alimentação</span>
-              <h3 className="font-bold text-lg text-gray-800 leading-tight">iFood</h3>
+              <h3 className="font-bold text-lg text-gray-800 leading-tight">Aiqfome</h3>
               <p className="text-sm text-gray-500 mt-1 mb-4">Pedidos acima de R$ 30</p>
               <button className="mt-auto w-full bg-amber-400 hover:bg-amber-500 text-gray-900 font-bold py-2.5 rounded-lg transition-colors">
                 Ver Detalhes
