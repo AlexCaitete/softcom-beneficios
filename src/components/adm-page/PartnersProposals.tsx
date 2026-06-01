@@ -122,16 +122,15 @@ export function PartnersProposals() {
   const [rejectingId, setRejectingId] = useState<number | null>(null);
 
   const handleApprove = (id: number) => {
-    // Busca a proposta selecionada para converter em recompensa
+    
     const proposal = proposals.find(p => p.id === id);
     
     if (proposal) {
-      // 1. Atualiza o status local da proposta
+   
       setProposals(proposals.map(p =>
         p.id === id ? { ...p, status: 'aprovado' } : p
       ));
 
-      // Converte os dados da proposta comercial no formato do Catálogo de Recompensas
       const newReward = {
         id: Date.now(),
         title: proposal.discountTitle,
@@ -139,12 +138,10 @@ export function PartnersProposals() {
         description: proposal.description
       };
 
-      // Persistência: Recupera o catálogo atual, adiciona o novo item e salva de volta
       const savedRewards = localStorage.getItem("@softcom:catalogRewards");
       const currentRewards = savedRewards ? JSON.parse(savedRewards) : [];
       localStorage.setItem("@softcom:catalogRewards", JSON.stringify([...currentRewards, newReward]));
       
-      // Dispara o evento que avisa os outros componentes (como o RewardsSection) para atualizarem
       window.dispatchEvent(new Event("local-storage-update"));
       toast.success("Proposta aprovada e adicionada ao catálogo!");
     }
@@ -297,7 +294,6 @@ export function PartnersProposals() {
         />
       )}
 
-      {/* Modal de Detalhes */}
       {showModal && selectedProposal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
           <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">

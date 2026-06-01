@@ -111,7 +111,7 @@ function TaskFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 800)); // Simula delay do servidor
+    await new Promise((resolve) => setTimeout(resolve, 800)); 
     onSave(form);
     setIsLoading(false);
   };
@@ -173,15 +173,13 @@ function TaskFormModal({
 }
 
 export function TasksSection() {
-  // 1. INICIALIZAÇÃO ROBUSTA:
   const [tasks, setTasks] = useState<Task[]>(() => {
     const saved = localStorage.getItem("@softcom:tasks");
     
     if (saved) {
       try {
         const parsed: Task[] = JSON.parse(saved);
-        // Filtro de segurança: Removemos duplicatas comparando os IDs.
-        // Isso garante que mesmo que o LocalStorage esteja "sujo", a tela mostre apenas uma vez cada ID.
+
         const uniqueTasks = parsed.filter((task, index, self) =>
           index === self.findIndex((t) => t.id === task.id)
         );
@@ -195,15 +193,10 @@ export function TasksSection() {
 
   const [showAddModal, setShowAddModal] = useState(false);
 
-  // 2. PERSISTÊNCIA: Este useEffect monitora a variável 'tasks'. 
-  // Toda vez que você adicionar (setTasks) ou excluir uma tarefa, 
-  // ele "carimba" a nova lista no LocalStorage do navegador automaticamente.
   useEffect(() => {
     localStorage.setItem("@softcom:tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  // 3. ADIÇÃO: Quando salvamos no modal, geramos um ID único (Date.now())
-  // e calculamos o progresso. Ao dar o 'setTasks', o useEffect acima é ativado.
   const handleAddTask = (data: any) => {
     const progress = Math.round((data.current / data.goal) * 100);
     setTasks([...tasks, { id: Date.now(), progress, ...data }]);
@@ -211,8 +204,6 @@ export function TasksSection() {
     toast.success("Tarefa criada com sucesso!");
   };
 
-  // 4. EXCLUSÃO: O .filter cria uma lista nova sem o ID que clicamos.
-  // O estado é atualizado e o LocalStorage também.
   const handleDeleteTask = (id: number) => {
     setTasks(tasks.filter(task => task.id !== id));
     toast.error("Tarefa excluída");

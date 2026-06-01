@@ -2,7 +2,6 @@ export default function Footer() {
     return (
         <footer className="bg-[#20252a] text-white py-12">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Logo e título */}
         <div>
           <div className="flex items-center gap-2 mb-4">
             <img
@@ -16,7 +15,6 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Saiba mais */}
         <div>
           <h3 className="text-[16px] text-[#FFD700] font-semibold mb-4">Saiba mais</h3>
           <ul className="space-y-2 text-gray-400">
@@ -26,7 +24,6 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Fale Conosco */}
         <div>
           <h3 className="text-[16px] text-[#FFD700] font-semibold mb-4">Fale Conosco</h3>
           <p className="text-gray-400">0800 003 3600</p>

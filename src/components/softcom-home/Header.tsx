@@ -12,7 +12,7 @@ export default function Header() {
           />
         </Link>
         <div className="flex gap-3">
-          {/* Agora Portal do Cliente leva para Meus Benefícios */}
+
           <Link
             to="/meus-beneficios"
             className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors"
@@ -20,7 +20,6 @@ export default function Header() {
             Portal do Cliente
           </Link>
 
-          {/* Agora Portal do Funcionário leva para Meu Perfil/Tarefas */}
           <Link
             to="/meu-perfil"
             className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors"

@@ -68,7 +68,6 @@ const initialAvailableVouchers: Voucher[] = [
 ];
 
 export function Vouchers() {
-  // 1. Carrega os vouchers ativos salvos ou os iniciais
   const [activeVouchers, setActiveVouchers] = useState<Voucher[]>(() => {
     const saved = localStorage.getItem("@softcom:userActiveVouchers");
     return saved ? JSON.parse(saved) : initialActiveVouchers;
@@ -76,20 +75,15 @@ export function Vouchers() {
 
   const [availableVouchers, setAvailableVouchers] = useState<Voucher[]>([]);
 
-  // Efeito principal de sincronização
   useEffect(() => {
     const syncVouchers = () => {
-      // Busca o catálogo geral definido pelo Admin
       const savedCatalog = localStorage.getItem("@softcom:catalogVouchers");
       const catalog: Voucher[] = savedCatalog ? JSON.parse(savedCatalog) : [];
       
-      // Cria um set de IDs ativos para facilitar a filtragem (evita duplicidade)
       const activeIds = new Set(activeVouchers.map(v => v.id));
       
-      // Junta os vouchers iniciais do código com os criados dinamicamente no Admin
       const allPotential = [...initialAvailableVouchers, ...catalog];
       
-      // Filtra: Remove o que já foi resgatado e garante que IDs repetidos não apareçam
       const filtered = allPotential.filter((v, index, self) => 
         !activeIds.has(v.id) && index === self.findIndex(t => t.id === v.id)
       );
@@ -99,7 +93,6 @@ export function Vouchers() {
 
     syncVouchers();
 
-    // Escuta atualizações vindas da página Admin
     window.addEventListener("local-storage-update", syncVouchers);
     window.addEventListener("storage", syncVouchers);
     return () => {
@@ -116,10 +109,8 @@ export function Vouchers() {
   };
 
   const handleRedeemVoucher = (voucher: Voucher) => {
-    // Adiciona o voucher à lista de ativos e remove o selo de "Novo"
     const newActiveList = [...activeVouchers, { ...voucher, isNew: false }];
     setActiveVouchers(newActiveList);
-    // Salva a nova lista de ativos do usuário no storage
     localStorage.setItem("@softcom:userActiveVouchers", JSON.stringify(newActiveList));
     toast.success(`Voucher "${voucher.title}" resgatado com sucesso!`);
   };

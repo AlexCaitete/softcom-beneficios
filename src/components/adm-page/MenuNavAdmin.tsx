@@ -6,7 +6,7 @@ export function MenuNavAdmin() {
   const [activeCatalogTab, setActiveTab] = useState<'recompensas' | 'vouchers'>('recompensas');
 
   return (
-    <div className="mt-12"> {/* Adiciona margem superior para separar das outras seções */}
+    <div className="mt-12"> 
       <nav className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto flex gap-8 px-6 overflow-x-auto">
           <button

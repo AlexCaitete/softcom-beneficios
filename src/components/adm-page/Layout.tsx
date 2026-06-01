@@ -13,7 +13,6 @@ export function Layout() {
     navigate('/');
   };
 
-  // Função para realizar o scroll suave até o ID de uma seção específica
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {

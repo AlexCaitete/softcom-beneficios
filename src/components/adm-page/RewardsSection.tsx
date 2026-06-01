@@ -102,20 +102,18 @@ function RewardFormModal({
 }
 
 export function RewardsSection() {
-  // Carrega o catálogo de recompensas do LocalStorage para manter as criações do Admin
+
   const [rewards, setRewards] = useState<Reward[]>(() => {
     const saved = localStorage.getItem("@softcom:catalogRewards");
     return saved ? JSON.parse(saved) : initialRewards;
   });
   const [showModal, setShowModal] = useState(false);
 
-  // Efeito para escutar atualizações externas (como aprovação de propostas)
   useEffect(() => {
     const syncRewards = () => {
       const saved = localStorage.getItem("@softcom:catalogRewards");
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Evita loop infinito comparando o conteúdo antes de atualizar
         if (JSON.stringify(rewards) !== saved) {
           setRewards(parsed);
         }
@@ -123,21 +121,18 @@ export function RewardsSection() {
     };
 
     window.addEventListener("local-storage-update", syncRewards);
-    window.addEventListener("storage", syncRewards); // Sincroniza entre abas
+    window.addEventListener("storage", syncRewards); 
     return () => {
       window.removeEventListener("local-storage-update", syncRewards);
       window.removeEventListener("storage", syncRewards);
     };
   }, [rewards]);
 
-  // Salva no LocalStorage e notifica outros componentes (como a página do funcionário) sobre a mudança
   useEffect(() => {
     localStorage.setItem("@softcom:catalogRewards", JSON.stringify(rewards));
-    // Dispara um evento personalizado para atualizar a lista do funcionário instantaneamente sem F5
     window.dispatchEvent(new Event("local-storage-update"));
   }, [rewards]);
 
-  // Adiciona nova recompensa ao catálogo dinâmico
   const handleAddReward = (data: Omit<Reward, "id">) => {
     const newReward = { ...data, id: Date.now() };
     setRewards([...rewards, newReward]);
@@ -145,7 +140,6 @@ export function RewardsSection() {
     toast.success("Recompensa adicionada ao catálogo!");
   };
 
-  // Remove recompensa do catálogo
   const handleDeleteReward = (id: number) => {
     setRewards(rewards.filter((r) => r.id !== id));
     toast.error("Recompensa removida");

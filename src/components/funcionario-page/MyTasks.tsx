@@ -39,8 +39,6 @@ const getStatusStyles = (status: string) => {
     }
   };
 
-// 1. DEFINIÇÃO DAS TAREFAS PADRÃO: Criamos esta lista para que, no primeiro acesso,
-// o funcionário não veja uma tela vazia antes do Admin salvar algo.
 const defaultTasksForAna = [
     {
       id: 1,
@@ -78,9 +76,6 @@ const defaultTasksForAna = [
 ];
 
 export function MyTasks() {
-    // 1. ESTADO INICIAL: Aqui é o segredo. Se você reiniciar o site e o LocalStorage
-    // estiver vazio, ele não deve ficar em branco, mas sim carregar as tarefas que 
-    // o sistema espera que existam por padrão.
     const [myTasks, setMyTasks] = useState<any[]>([]);
 
     useEffect(() => {
@@ -88,25 +83,18 @@ export function MyTasks() {
             const saved = localStorage.getItem("@softcom:tasks");
             
             if (saved) {
-                // Se o "banco de dados" existe, mostramos exatamente o que o Admin definiu.
                 const allTasks = JSON.parse(saved);
                 const filtered = allTasks.filter((t: any) => t.employee === employee.name);
                 setMyTasks(filtered);
             } else {
-                // Se for o primeiro acesso ao site, carregamos o padrão para não ver a tela vazia.
                 setMyTasks(defaultTasksForAna);
             }
         };
 
-        // 3. EXECUÇÃO IMEDIATA: Roda assim que a tela abre.
         loadTasks();
 
-        // 4. SINCRONIZAÇÃO ENTRE ABAS: Se você tiver a aba do Admin aberta e deletar
-        // uma tarefa lá, esse evento 'storage' avisa esta aba para recarregar os dados
-        // sem que o usuário precise dar F5.
         window.addEventListener("storage", loadTasks);
         
-        // Limpeza do ouvinte ao sair da tela para não gastar memória.
         return () => window.removeEventListener("storage", loadTasks);
     }, []);
 

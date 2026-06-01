@@ -49,13 +49,11 @@
   ];
 
 export function RewardsSection() {
-    // Gerencia o histórico de prêmios, os pontos do funcionário e o catálogo vindo do Admin
     const [rewards, setRewards] = useState(myRewards);
     const [employeeData, setEmployeeData] = useState(defaultEmployee);
     const [catalogRewards, setCatalogRewards] = useState(availableRewards);
 
     useEffect(() => {
-      // Função para carregar dados persistidos e sincronizados
       const loadData = () => {
         const savedRewards = localStorage.getItem("@softcom:myRewards");
         if (savedRewards) setRewards(JSON.parse(savedRewards));
@@ -68,8 +66,7 @@ export function RewardsSection() {
       };
 
       loadData();
-      // Escuta mudanças de outras abas e eventos internos da mesma aba para atualizar pontos 
-      // e recompensas em tempo real
+
       window.addEventListener("storage", loadData);
       window.addEventListener("local-storage-update", loadData);
       return () => {
@@ -78,9 +75,9 @@ export function RewardsSection() {
       };
     }, []);
 
-    // Lógica de resgate: valida saldo, subtrai pontos e registra no histórico de "Meus Prêmios"
+    
     const handleRedeem = (reward: any) => {
-      const cost = reward.cost || reward.points; // Aceita 'cost' (do Admin) ou 'points' (padrão antigo)
+      const cost = reward.cost || reward.points; 
       if (employeeData.points < cost) {
         toast.error("Pontos insuficientes!");
         return;
@@ -88,7 +85,7 @@ export function RewardsSection() {
 
       const updatedEmployee = {
         ...employeeData,
-        points: employeeData.points - cost, // Desconto do saldo
+        points: employeeData.points - cost, 
         rewards: (employeeData.rewards || 0) + 1,
       };
 
@@ -106,7 +103,7 @@ export function RewardsSection() {
       setEmployeeData(updatedEmployee);
       setRewards(updatedRewards);
 
-      // Notifica outros componentes na mesma aba
+      
       window.dispatchEvent(new Event("local-storage-update"));
       toast.success(`${reward.title} resgatado com sucesso!`);
     };
@@ -115,7 +112,6 @@ export function RewardsSection() {
         <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Available Rewards */}
             <div className="lg:col-span-2">
               <h2 className="text-3xl font-bold mb-6">
                 Recompensas Disponíveis
@@ -179,7 +175,6 @@ export function RewardsSection() {
               </div>
             </div>
 
-            {/* My Rewards History */}
             <div>
               <h2 className="text-3xl font-bold mb-6">Meus Prêmios</h2>
               <div className="bg-white border-2 border-gray-200 rounded-xl p-6">

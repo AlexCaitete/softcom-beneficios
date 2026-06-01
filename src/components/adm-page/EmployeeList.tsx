@@ -1,4 +1,3 @@
-// Importação de ícones do Lucide e hooks de estado/efeito do React
 import { Trophy, Star, TrendingUp, CheckCircle, Plus, X, Trash2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
@@ -16,7 +15,6 @@ interface Employee {
   color: string;
 }
 
-// Lista estática que serve de backup caso o LocalStorage esteja vazio (ID 1 a 6)
 const initialEmployees: Employee[] = [
   { id: 1, name: "Ana Silva", role: "Gerente de Vendas", avatar: "AS", tasksCompleted: 18, totalTasks: 20, points: 2400, performance: 90, rewards: 5, color: "#FFD700" },
   { id: 2, name: "Carlos Mendes", role: "Desenvolvedor", avatar: "CM", tasksCompleted: 15, totalTasks: 18, points: 2100, performance: 83, rewards: 4, color: "#FFA500" },
@@ -27,15 +25,11 @@ const initialEmployees: Employee[] = [
 ];
 
 export function EmployeeList() {
-  // Estado que gerencia a lista de funcionários. 
   const [employees, setEmployees] = useState<Employee[]>(() => {
-    // Usamos '@softcom:employees_v2' para garantir que o navegador carregue os 6 funcionários originais,
-    // mesmo que existam dados de testes antigos (com apenas 2 nomes) salvos no LocalStorage.
     const saved = localStorage.getItem("@softcom:employees_v2");
     return saved ? JSON.parse(saved) : initialEmployees;
   });
 
-  // Estados para controlar a exibição do modal e capturar os dados do formulário
   const [showModal, setShowModal] = useState(false);
   const [newEmployee, setNewEmployee] = useState({
     name: "",
@@ -44,31 +38,28 @@ export function EmployeeList() {
     points: 0
   });
 
-  // Salva automaticamente no navegador sempre que um funcionário é adicionado ou removido
   useEffect(() => {
     localStorage.setItem("@softcom:employees_v2", JSON.stringify(employees));
   }, [employees]);
 
-  // Lógica para processar o formulário e criar um novo objeto de funcionário
   const handleAddEmployee = (e: React.FormEvent) => {
     e.preventDefault();
     const employee: Employee = {
-      id: Date.now(), // ID único baseado no tempo atual
+      id: Date.now(),
       ...newEmployee,
-      tasksCompleted: 0, // Novos colaboradores iniciam com progresso zerado
+      tasksCompleted: 0,
       totalTasks: 10,
       performance: 0,
       rewards: 0,
-      color: "#" + Math.floor(Math.random()*16777215).toString(16) // Gera uma cor hexadecimal aleatória
+      color: "#" + Math.floor(Math.random()*16777215).toString(16)
     };
 
-    setEmployees([...employees, employee]); // Adiciona à lista
-    setNewEmployee({ name: "", role: "", avatar: "", points: 0 }); // Limpa formulário
-    setShowModal(false); // Fecha modal
+    setEmployees([...employees, employee]);
+    setNewEmployee({ name: "", role: "", avatar: "", points: 0 });
+    setShowModal(false);
     toast.success("Funcionário adicionado com sucesso!");
   };
 
-  // Lógica para excluir: remove o item da lista filtrando pelo ID
   const handleDeleteEmployee = (id: number) => {
     setEmployees(employees.filter(emp => emp.id !== id));
     toast.error("Funcionário removido");
@@ -167,7 +158,6 @@ export function EmployeeList() {
         </div>
       </div>
 
-      {/* Modal Adicionar Funcionário */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-6">
           <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden">

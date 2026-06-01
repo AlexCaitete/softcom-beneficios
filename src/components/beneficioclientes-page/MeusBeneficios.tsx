@@ -1,7 +1,7 @@
 export function MeusBeneficios() {
   return (
     <div className="space-y-12">
-      {/* Seção: Descontos em Destaque */}
+
       <section>
         <div className="flex justify-between items-end mb-6">
           <div>
@@ -14,7 +14,7 @@ export function MeusBeneficios() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Card 1 - SmartFit */}
+
           <div className="bg-white border border-amber-400 rounded-2xl overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-shadow">
             <div className="relative h-40 bg-gray-800">
               <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=400&auto=format&fit=crop" alt="Academia" className="w-full h-full object-cover opacity-60" />
@@ -34,7 +34,6 @@ export function MeusBeneficios() {
             </div>
           </div>
 
-          {/* Card 2 - Pague Menos */}
           <div className="bg-white border border-amber-400 rounded-2xl overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-shadow">
             <div className="relative h-40 bg-gray-800">
               <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?q=80&w=400&auto=format&fit=crop" alt="Farmácia" className="w-full h-full object-cover opacity-60" />
@@ -54,7 +53,6 @@ export function MeusBeneficios() {
             </div>
           </div>
 
-          {/* Card 3 - Cinemark */}
           <div className="bg-white border border-amber-400 rounded-2xl overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-shadow">
             <div className="relative h-40 bg-gray-800">
               <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=400&auto=format&fit=crop" alt="Cinema" className="w-full h-full object-cover opacity-60" />
@@ -74,7 +72,6 @@ export function MeusBeneficios() {
             </div>
           </div>
 
-          {/* Card 4 - iFood */}
           <div className="bg-white border border-amber-400 rounded-2xl overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-shadow">
             <div className="relative h-40 bg-gray-800">
               <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=400&auto=format&fit=crop" alt="Alimentação" className="w-full h-full object-cover opacity-60" />
@@ -96,7 +93,7 @@ export function MeusBeneficios() {
         </div>
       </section>
 
-      {/* Seção: Mais Benefícios */}
+      
       <section>
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-800">Mais Benefícios</h2>
@@ -104,7 +101,7 @@ export function MeusBeneficios() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Item 1 */}
+
           <div className="bg-white rounded-2xl p-5 flex items-center justify-between shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center">
@@ -119,7 +116,6 @@ export function MeusBeneficios() {
             <span className="font-bold text-xl text-amber-500">20%</span>
           </div>
 
-          {/* Item 2 */}
           <div className="bg-white rounded-2xl p-5 flex items-center justify-between shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-gray-100 text-gray-800 rounded-xl flex items-center justify-center">
@@ -134,7 +130,6 @@ export function MeusBeneficios() {
             <span className="font-bold text-xl text-amber-500">15%</span>
           </div>
 
-          {/* Item 3 */}
           <div className="bg-white rounded-2xl p-5 flex items-center justify-between shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
