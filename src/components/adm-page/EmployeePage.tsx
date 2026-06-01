@@ -1,7 +1,8 @@
 import { Target, TrendingUp, Award, Star, CheckCircle2, Clock, AlertCircle, Trophy, Gift } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export function EmployeePage() {
-  // Dados simulados do funcionário logado
+  
   const employee = {
     name: 'Ana Silva',
     role: 'Gerente de Vendas',
@@ -15,41 +16,25 @@ export function EmployeePage() {
     nextLevelPoints: 3000
   };
 
-  const myTasks = [
-    {
-      id: 1,
-      title: 'Fechar 10 vendas no mês',
-      progress: 80,
-      current: 8,
-      goal: 10,
-      status: 'em-andamento',
-      deadline: '2026-05-31',
-      points: 500,
-      prize: 'Bônus R$ 500'
-    },
-    {
-      id: 2,
-      title: 'Treinar 3 novos colaboradores',
-      progress: 100,
-      current: 3,
-      goal: 3,
-      status: 'concluida',
-      deadline: '2026-05-15',
-      points: 400,
-      prize: 'Dia de folga extra'
-    },
-    {
-      id: 3,
-      title: 'Aumentar ticket médio em 20%',
-      progress: 65,
-      current: 13,
-      goal: 20,
-      status: 'em-andamento',
-      deadline: '2026-05-28',
-      points: 600,
-      prize: 'Vale presente R$ 300'
-    }
-  ];
+  const [myTasks, setMyTasks] = useState<any[]>([]);
+
+  useEffect(() => {
+
+    const loadTasks = () => {
+      const saved = localStorage.getItem("@softcom:tasks");
+      if (saved) {
+        const allTasks = JSON.parse(saved);
+
+        const filtered = allTasks.filter((t: any) => t.employee === employee.name);
+        setMyTasks(filtered);
+      }
+    };
+
+    loadTasks();
+
+    window.addEventListener('storage', loadTasks);
+    return () => window.removeEventListener('storage', loadTasks);
+  }, [employee.name]);
 
   const myRewards = [
     {
@@ -178,7 +163,6 @@ export function EmployeePage() {
         </div>
       </section>
 
-      {/* Stats Cards */}
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -225,7 +209,6 @@ export function EmployeePage() {
         </div>
       </section>
 
-      {/* My Tasks */}
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-3xl font-bold mb-6">Minhas Tarefas</h2>
@@ -295,11 +278,10 @@ export function EmployeePage() {
         </div>
       </section>
 
-      {/* Rewards Section */}
       <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Available Rewards */}
+
             <div className="lg:col-span-2">
               <h2 className="text-3xl font-bold mb-6">Recompensas Disponíveis</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -348,7 +330,6 @@ export function EmployeePage() {
               </div>
             </div>
 
-            {/* My Rewards History */}
             <div>
               <h2 className="text-3xl font-bold mb-6">Meus Prêmios</h2>
               <div className="bg-white border-2 border-gray-200 rounded-xl p-6">

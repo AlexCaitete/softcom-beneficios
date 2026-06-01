@@ -1,69 +1,159 @@
+import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
+import { Tag } from 'lucide-react';
+
+interface Voucher {
+  id: number;
+  category: string;
+  title: string;
+  description: string;
+  discount: string;
+  code: string; 
+  expiration: string; 
+  isNew?: boolean; 
+}
+
+const initialActiveVouchers: Voucher[] = [
+  {
+    id: 1,
+    category: 'Saúde',
+    title: 'Academia SmartFit',
+    description: 'Válido para qualquer plano anual',
+    discount: '50% OFF',
+    code: 'SOFT50FIT',
+    expiration: 'Expira em 30 dias',
+  },
+  {
+    id: 2,
+    category: 'Alimentação',
+    title: 'Aiqfome Delivery',
+    description: 'Em pedidos acima de R$ 50',
+    discount: 'R$ 20 OFF',
+    code: 'SOFTFOOD30',
+    expiration: 'Expira em 15 dias',
+  },
+];
+
+const initialAvailableVouchers: Voucher[] = [
+  {
+    id: 3,
+    category: 'Entretenimento',
+    title: 'Cinema Desconto',
+    description: 'Desconto em ingressos de cinema',
+    discount: '35% OFF',
+    code: 'CINE35SOFT',
+    expiration: 'Expira em 30 dias',
+    isNew: true,
+  },
+  {
+    id: 4,
+    category: 'Música',
+    title: 'Streaming de Música',
+    description: 'Desconto em assinaturas de streaming',
+    discount: '40% OFF',
+    code: 'SOFTMUSIC40',
+    expiration: 'Expira em 15 dias',
+    isNew: true,
+  },
+  {
+    id: 5,
+    category: 'Tecnologia',
+    title: 'Eletrônicos Desconto',
+    description: 'Desconto em produtos eletrônicos',
+    discount: '3 meses grátis',
+    code: 'SOFTECHFREE',
+    expiration: 'Expira em 60 dias',
+    isNew: true,
+  },
+];
+
 export function Vouchers() {
+  const [activeVouchers, setActiveVouchers] = useState<Voucher[]>(() => {
+    const saved = localStorage.getItem("@softcom:userActiveVouchers");
+    return saved ? JSON.parse(saved) : initialActiveVouchers;
+  });
+
+  const [availableVouchers, setAvailableVouchers] = useState<Voucher[]>([]);
+
+  useEffect(() => {
+    const syncVouchers = () => {
+      const savedCatalog = localStorage.getItem("@softcom:catalogVouchers");
+      const catalog: Voucher[] = savedCatalog ? JSON.parse(savedCatalog) : [];
+      
+      const activeIds = new Set(activeVouchers.map(v => v.id));
+      
+      const allPotential = [...initialAvailableVouchers, ...catalog];
+      
+      const filtered = allPotential.filter((v, index, self) => 
+        !activeIds.has(v.id) && index === self.findIndex(t => t.id === v.id)
+      );
+      
+      setAvailableVouchers(filtered);
+    };
+
+    syncVouchers();
+
+    window.addEventListener("local-storage-update", syncVouchers);
+    window.addEventListener("storage", syncVouchers);
+    return () => {
+      window.removeEventListener("local-storage-update", syncVouchers);
+      window.removeEventListener("storage", syncVouchers);
+    };
+  }, [activeVouchers]);
+
+  const handleCopyCode = (code: string | undefined) => {
+    if (code) {
+      navigator.clipboard.writeText(code);
+      toast.success('Código do voucher copiado!');
+    }
+  };
+
+  const handleRedeemVoucher = (voucher: Voucher) => {
+    const newActiveList = [...activeVouchers, { ...voucher, isNew: false }];
+    setActiveVouchers(newActiveList);
+    localStorage.setItem("@softcom:userActiveVouchers", JSON.stringify(newActiveList));
+    toast.success(`Voucher "${voucher.title}" resgatado com sucesso!`);
+  };
+
   return (
     <div className="space-y-12">
       <section>
         <div className="flex justify-between items-end mb-6">
           <div>
             <h2 className="text-2xl font-bold text-gray-800">Meus Vouchers Ativos</h2>
-            <p className="text-gray-500 mt-1">Vouchers que você já resgatou</p>
+            <p className="text-gray-500 mt-1">Vouchers que você já resgatou.</p>
           </div>
           <span className="bg-[#10B981] text-white px-4 py-1.5 rounded-full text-sm font-semibold shadow-sm">
-            2 ativos
+            {activeVouchers.length} ativos
           </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-[#10B981] rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex justify-between items-start">
-              <div className="flex gap-4">
-                <div className="w-16 h-16 bg-black/20 rounded-xl overflow-hidden flex-shrink-0">
-                  <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=100&auto=format&fit=crop" alt="Saúde" className="w-full h-full object-cover opacity-90" />
-                </div>
-                <div>
-                  <span className="bg-white/20 px-2.5 py-1 rounded-md text-xs font-semibold mb-2 inline-block">Saúde</span>
-                  <h3 className="font-bold text-xl leading-tight">Academia SmartFit</h3>
-                  <p className="text-sm text-green-100 mt-1">Válido para qualquer plano anual</p>
-                </div>
-              </div>
-              <span className="bg-white text-[#10B981] font-bold px-3 py-1.5 rounded-lg text-lg shadow-sm">50% OFF</span>
-            </div>
-            <div className="mt-8 flex items-end justify-between">
-              <div>
-                <p className="text-xs text-green-100 mb-1">Código do Voucher</p>
-                <p className="font-mono text-2xl font-bold tracking-wider">SOFT50FIT</p>
-                <p className="text-xs text-green-100 mt-1">Expira em 30 dias</p>
-              </div>
-              <button className="bg-white text-[#10B981] px-6 py-2.5 rounded-xl font-bold hover:bg-gray-50 transition-colors shadow-sm">
-                Copiar
-              </button>
-            </div>
-          </div>
+          {activeVouchers.map((voucher) => (
+            <div key={voucher.id} className="bg-[#10B981] rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
+              <div className="flex justify-between items-start">
+                <div className="flex gap-4">
 
-          <div className="bg-[#10B981] rounded-2xl p-6 text-white shadow-lg hover:shadow-xl transition-shadow">
-            <div className="flex justify-between items-start">
-              <div className="flex gap-4">
-                <div className="w-16 h-16 bg-black/20 rounded-xl overflow-hidden flex-shrink-0">
-                  <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=100&auto=format&fit=crop" alt="Alimentação" className="w-full h-full object-cover opacity-90" />
+                  <div>
+                    <span className="bg-white/20 px-2.5 py-1 rounded-md text-xs font-semibold mb-2 inline-block">{voucher.category}</span>
+                    <h3 className="font-bold text-xl leading-tight">{voucher.title}</h3>
+                    <p className="text-sm text-green-100 mt-1">{voucher.description}</p>
+                  </div>
                 </div>
+                <span className="bg-white text-[#10B981] font-bold px-3 py-1.5 rounded-lg text-lg shadow-sm">{voucher.discount}</span>
+              </div>
+              <div className="mt-8 flex items-end justify-between">
                 <div>
-                  <span className="bg-white/20 px-2.5 py-1 rounded-md text-xs font-semibold mb-2 inline-block">Alimentação</span>
-                  <h3 className="font-bold text-xl leading-tight">iFood Delivery</h3>
-                  <p className="text-sm text-green-100 mt-1">Em pedidos acima de R$ 50</p>
+                  <p className="text-xs text-green-100 mb-1">Código do Voucher</p>
+                  <p className="font-mono text-2xl font-bold tracking-wider">{voucher.code}</p>
+                  <p className="text-xs text-green-100 mt-1">{voucher.expiration}</p>
                 </div>
+                <button onClick={() => handleCopyCode(voucher.code)} className="bg-white text-[#10B981] px-6 py-2.5 rounded-xl font-bold hover:bg-gray-50 transition-colors shadow-sm">
+                  Copiar
+                </button>
               </div>
-              <span className="bg-white text-[#10B981] font-bold px-3 py-1.5 rounded-lg text-lg shadow-sm">R$ 20 OFF</span>
             </div>
-            <div className="mt-8 flex items-end justify-between">
-              <div>
-                <p className="text-xs text-green-100 mb-1">Código do Voucher</p>
-                <p className="font-mono text-2xl font-bold tracking-wider">SOFTFOOD30</p>
-                <p className="text-xs text-green-100 mt-1">Expira em 15 dias</p>
-              </div>
-              <button className="bg-white text-[#10B981] px-6 py-2.5 rounded-xl font-bold hover:bg-gray-50 transition-colors shadow-sm">
-                Copiar
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -74,34 +164,42 @@ export function Vouchers() {
             <p className="text-gray-500 mt-1">Clique para resgatar e ativar seu desconto</p>
           </div>
           <span className="bg-amber-400 text-amber-900 px-4 py-1.5 rounded-full text-sm font-semibold shadow-sm">
-            4 disponíveis
+            {availableVouchers.length} disponíveis
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="h-48 bg-gray-800 rounded-2xl relative overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-shadow">
-            <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=400&auto=format&fit=crop" alt="Cinema" className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-40 transition-opacity" />
-            <div className="absolute top-4 right-4 bg-amber-400 text-amber-900 text-xs font-bold px-2 py-1 rounded">Novo</div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="bg-amber-400 text-gray-900 font-bold px-4 py-2 rounded-lg text-xl shadow-md">35% OFF</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {availableVouchers.map((voucher) => (
+            <div
+              key={voucher.id}
+              className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer relative group flex flex-col justify-between"
+            >
+              {voucher.isNew && (
+                <div className="absolute top-3 right-3 bg-amber-400 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
+                  Novo
+                </div>
+              )}
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-amber-50 rounded-lg">
+                    <Tag className="w-6 h-6 text-amber-500" />
+                  </div>
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{voucher.category}</span>
+                </div>
+                <h3 className="font-bold text-lg mb-1">{voucher.title}</h3>
+                <p className="text-sm text-gray-500 mb-4 line-clamp-2">{voucher.description}</p>
+              </div>
+              <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                <span className="text-xl font-bold text-amber-500">{voucher.discount}</span>
+                <button 
+                  onClick={() => handleRedeemVoucher(voucher)}
+                  className="bg-blue-600 px-4 py-2 text-sm rounded-lg font-bold text-white cursor-pointer hover:bg-blue-700 transition-colors shadow-md"
+                >
+                  Resgatar voucher
+                </button>
+              </div>
             </div>
-          </div>
-          
-          <div className="h-48 bg-gray-800 rounded-2xl relative overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-shadow">
-            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=400&auto=format&fit=crop" alt="Música" className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-40 transition-opacity" />
-            <div className="absolute top-4 right-4 bg-amber-400 text-amber-900 text-xs font-bold px-2 py-1 rounded">Novo</div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="bg-amber-400 text-gray-900 font-bold px-4 py-2 rounded-lg text-xl shadow-md">40% OFF</span>
-            </div>
-          </div>
-          
-          <div className="h-48 bg-gray-800 rounded-2xl relative overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-shadow">
-            <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?q=80&w=400&auto=format&fit=crop" alt="Eletrônicos" className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-40 transition-opacity" />
-            <div className="absolute top-4 right-4 bg-amber-400 text-amber-900 text-xs font-bold px-2 py-1 rounded">Novo</div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="bg-amber-400 text-gray-900 font-bold px-4 py-2 rounded-lg text-xl shadow-md">3 meses grátis</span>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </div>

@@ -1,40 +1,6 @@
 import { CheckCircle2, AlertCircle, Clock } from "lucide-react";
-
-const myTasks = [
-    {
-      id: 1,
-      title: "Fechar 10 vendas no mês",
-      progress: 80,
-      current: 8,
-      goal: 10,
-      status: "em-andamento",
-      deadline: "2026-05-31",
-      points: 500,
-      prize: "Bônus R$ 500",
-    },
-    {
-      id: 2,
-      title: "Treinar 3 novos colaboradores",
-      progress: 100,
-      current: 3,
-      goal: 3,
-      status: "concluida",
-      deadline: "2026-05-15",
-      points: 400,
-      prize: "Dia de folga extra",
-    },
-    {
-      id: 3,
-      title: "Aumentar ticket médio em 20%",
-      progress: 65,
-      current: 13,
-      goal: 20,
-      status: "em-andamento",
-      deadline: "2026-05-28",
-      points: 600,
-      prize: "Vale presente R$ 300",
-    },
-];
+import { useState, useEffect } from "react";
+import { employee } from "./ProfileHeader";
 
 const getStatusStyles = (status: string) => {
     switch (status) {
@@ -73,7 +39,65 @@ const getStatusStyles = (status: string) => {
     }
   };
 
+const defaultTasksForAna = [
+    {
+      id: 1,
+      title: "Fechar 10 vendas no mês",
+      progress: 80,
+      current: 8,
+      goal: 10,
+      status: "em-andamento",
+      deadline: "2026-05-31",
+      points: 500,
+      prize: "Bônus R$ 500",
+    },
+    {
+      id: 4,
+      title: "Treinar 3 novos colaboradores",
+      progress: 100,
+      current: 3,
+      goal: 3,
+      status: "concluida",
+      deadline: "2026-05-15",
+      points: 400,
+      prize: "Dia de folga extra",
+    },
+    {
+      id: 5,
+      title: "Aumentar ticket médio em 20%",
+      progress: 65,
+      current: 13,
+      goal: 20,
+      status: "em-andamento",
+      deadline: "2026-05-28",
+      points: 600,
+      prize: "Vale presente R$ 300",
+    },
+];
+
 export function MyTasks() {
+    const [myTasks, setMyTasks] = useState<any[]>([]);
+
+    useEffect(() => {
+        const loadTasks = () => {
+            const saved = localStorage.getItem("@softcom:tasks");
+            
+            if (saved) {
+                const allTasks = JSON.parse(saved);
+                const filtered = allTasks.filter((t: any) => t.employee === employee.name);
+                setMyTasks(filtered);
+            } else {
+                setMyTasks(defaultTasksForAna);
+            }
+        };
+
+        loadTasks();
+
+        window.addEventListener("storage", loadTasks);
+        
+        return () => window.removeEventListener("storage", loadTasks);
+    }, []);
+
     return (
         <section className="py-8">
         <div className="max-w-7xl mx-auto px-6">

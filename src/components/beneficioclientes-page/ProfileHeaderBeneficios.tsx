@@ -5,7 +5,7 @@ export function ProfileHeaderBeneficios() {
     const navigate = useNavigate();
     
       const handleLogout = () => {
-        navigate('/'); // Assumindo que a rota para a página do funcionário é '/employee'
+        navigate('/'); 
       };
       
     return (

@@ -1,14 +1,5 @@
-import {
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  Target,
-  Trash2,
-  Plus,
-  X,
-  Edit2,
-} from "lucide-react";
-import { useState } from "react";
+import { Trash2, Plus, X } from "lucide-react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
 interface Task {
@@ -70,6 +61,30 @@ const initialTasks: Task[] = [
     points: 600,
     prize: "Vale presente R$ 300",
   },
+  {
+    id: 4,
+    title: "Treinar 3 novos colaboradores",
+    employee: "Ana Silva",
+    progress: 100,
+    current: 3,
+    goal: 3,
+    status: "concluida",
+    deadline: "2026-05-15",
+    points: 400,
+    prize: "Dia de folga extra",
+  },
+  {
+    id: 5,
+    title: "Aumentar ticket médio em 20%",
+    employee: "Ana Silva",
+    progress: 65,
+    current: 13,
+    goal: 20,
+    status: "em-andamento",
+    deadline: "2026-05-28",
+    points: 600,
+    prize: "Vale presente R$ 300",
+  },
 ];
 
 function TaskFormModal({
@@ -96,7 +111,7 @@ function TaskFormModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 800)); // Simula delay do servidor
+    await new Promise((resolve) => setTimeout(resolve, 800)); 
     onSave(form);
     setIsLoading(false);
   };
@@ -158,15 +173,40 @@ function TaskFormModal({
 }
 
 export function TasksSection() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const saved = localStorage.getItem("@softcom:tasks");
+    
+    if (saved) {
+      try {
+        const parsed: Task[] = JSON.parse(saved);
+
+        const uniqueTasks = parsed.filter((task, index, self) =>
+          index === self.findIndex((t) => t.id === task.id)
+        );
+        return uniqueTasks;
+      } catch (e) {
+        return initialTasks;
+      }
+    }
+    return initialTasks;
+  });
+
   const [showAddModal, setShowAddModal] = useState(false);
-  const [editingTask, setEditingTask] = useState<Task | null>(null);
+
+  useEffect(() => {
+    localStorage.setItem("@softcom:tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleAddTask = (data: any) => {
     const progress = Math.round((data.current / data.goal) * 100);
     setTasks([...tasks, { id: Date.now(), progress, ...data }]);
     setShowAddModal(false);
     toast.success("Tarefa criada com sucesso!");
+  };
+
+  const handleDeleteTask = (id: number) => {
+    setTasks(tasks.filter(task => task.id !== id));
+    toast.error("Tarefa excluída");
   };
 
   return (
@@ -187,10 +227,20 @@ export function TasksSection() {
               key={task.id}
               className="bg-white border-2 border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all"
             >
-              <h3 className="font-bold text-lg">{task.title}</h3>
-              <p className="text-sm text-gray-600 mb-4">
-                Responsável: {task.employee}
-              </p>
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="font-bold text-lg">{task.title}</h3>
+                  <p className="text-sm text-gray-600">
+                    Responsável: {task.employee}
+                  </p>
+                </div>
+                <button 
+                  onClick={() => handleDeleteTask(task.id)}
+                  className="text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors"
+                >
+                  <Trash2 className="w-5 h-5" />
+                </button>
+              </div>
               <div className="w-full bg-gray-200 rounded-full h-3">
                 <div
                   className="h-3 rounded-full bg-[#FFD700]"

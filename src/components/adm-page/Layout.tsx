@@ -13,6 +13,13 @@ export function Layout() {
     navigate('/');
   };
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <header className="bg-black text-white border-b-4 border-[#FFD700]">
@@ -34,15 +41,24 @@ export function Layout() {
             <nav className="flex items-center gap-6">
               {isAdminPage && (
                 <>
-                  <button className="flex items-center gap-2 px-4 py-2 hover:text-[#FFD700] transition-colors">
+                  <button 
+                    onClick={() => scrollToSection('employees-section')}
+                    className="flex items-center gap-2 px-4 py-2 hover:text-[#FFD700] transition-colors"
+                  >
                     <Users className="w-5 h-5" />
                     <span>Funcionários</span>
                   </button>
-                  <button className="flex items-center gap-2 px-4 py-2 hover:text-[#FFD700] transition-colors">
+                  <button 
+                    onClick={() => scrollToSection('metrics-section')}
+                    className="flex items-center gap-2 px-4 py-2 hover:text-[#FFD700] transition-colors"
+                  >
                     <TrendingUp className="w-5 h-5" />
                     <span>Métricas</span>
                   </button>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-[#FFD700] text-black rounded-lg hover:bg-[#FFC700] transition-colors">
+                  <button 
+                    onClick={() => scrollToSection('rewards-section')}
+                    className="flex items-center gap-2 px-4 py-2 bg-[#FFD700] text-black rounded-lg hover:bg-[#FFC700] transition-colors"
+                  >
                     <Gift className="w-5 h-5" />
                     <span>Recompensas</span>
                   </button>
