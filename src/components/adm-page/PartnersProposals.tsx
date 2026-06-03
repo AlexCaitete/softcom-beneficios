@@ -225,6 +225,7 @@ export function PartnersProposals() {
 
   const handleReject = (id: number | string) => {
     setRejectingId(id);
+    setShowModal(false);
   };
 
   const confirmReject = () => {
@@ -234,8 +235,8 @@ export function PartnersProposals() {
           p.id === rejectingId ? { ...p, status: "recusado" } : p,
         ),
       );
-      setShowModal(false);
       setRejectingId(null);
+      toast.error("Proposta recusada com sucesso.");
     }
   };
 
@@ -388,7 +389,7 @@ export function PartnersProposals() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => handleViewDetails(proposal)}
-                        className="flex-1 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm font-semibold flex items-center justify-center gap-2"
+                        className="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm font-semibold flex items-center justify-center gap-2"
                       >
                         <Eye className="w-4 h-4" />
                         Ver Detalhes
