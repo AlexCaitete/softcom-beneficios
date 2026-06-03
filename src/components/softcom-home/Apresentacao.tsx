@@ -1,33 +1,40 @@
-export default function Apresentacao() {
+import { Link } from "react-router-dom";
+import logoSoftcom from "../../assets/logo.png";
+
+export default function Header() {
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-        <div className="">
+    <header className="border-b border-gray-200 bg-white sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
+        <Link to="/" className="flex items-center">
           <img
-            src="/src/assets/woman-discount.png"
-            alt="Mulher com celular"
-            className="w-full max-w-md object-contain"
+            src={logoSoftcom}
+            alt="Softcom"
+            className="h-10 object-contain"
           />
-        </div>
-        <div>
-          <h1 className="text-[2.2rem] text-gray-900 font-bold mb-6 ">
-            Somos a tecnologia que{" "}
-            <span className="bg-[#FFD700] p-[3px]">IMPULSIONA</span> o comércio!
-          </h1>
-          <p className="text-[0.96rem] text-gray-600 font-medium leading-relaxed">
-            Bem-vindo à Softcom! É um prazer ter você conosco! Na Softcom,
-            acreditamos que a tecnologia é uma ferramenta poderosa para
-            transformar ideias em soluções inovadoras. Nosso compromisso é
-            oferecer serviços de qualidade, sempre com foco em eficiência,
-            inovação e excelência no atendimento. Aqui, você encontrará uma
-            equipe dedicada, pronta para entender suas necessidades e entregar
-            resultados que realmente fazem a diferença. Seja você um cliente,
-            parceiro ou colaborador, saiba que sua presença é muito importante
-            para nós. Conte com a Softcom para caminhar ao seu lado rumo ao
-            sucesso! Seja muito bem-vindo!
-          </p>
+        </Link>
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3 text-sm md:text-base text-center">
+          <Link
+            to="/meus-beneficios"
+            className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors"
+          >
+            Portal do Cliente
+          </Link>
+
+          <Link
+            to="/meu-perfil"
+            className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors"
+          >
+            Portal do Funcionário
+          </Link>
+
+          <Link
+            to="/admin"
+            className="px-3 py-1 bg-gray-900 text-white hover:bg-gray-800 font-medium rounded-full transition-colors"
+          >
+            Portal do Administrador
+          </Link>
         </div>
       </div>
-    </section>
+    </header>
   );
 }
