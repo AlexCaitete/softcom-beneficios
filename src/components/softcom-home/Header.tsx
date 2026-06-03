@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logoSoftcom from "../../assets/logo.png";
 
 export default function Header() {
   return (
@@ -6,7 +7,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
         <Link to="/" className="flex items-center">
           <img
-            src="/src/assets/logo.png"
+            src={logoSoftcom}
             alt="Softcom"
             className="h-10 object-contain"
           />
