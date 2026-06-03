@@ -280,21 +280,21 @@ export function PartnersProposals() {
   return (
     <section className="py-8 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
           <div>
             <h2 className="text-3xl font-bold mb-2">Propostas de Parceiros</h2>
             <p className="text-gray-600">
               Gerencie ofertas de descontos para seus funcionários
             </p>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="bg-white border-2 border-yellow-500 rounded-lg px-4 py-2">
+          <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
+            <div className="bg-white border-2 border-yellow-500 rounded-lg px-4 py-2 flex-1 md:flex-none">
               <p className="text-sm text-gray-600">Aguardando aprovação</p>
               <p className="text-2xl font-bold text-yellow-600">
                 {pendingCount}
               </p>
             </div>
-            <div className="bg-white border-2 border-green-500 rounded-lg px-4 py-2">
+            <div className="bg-white border-2 border-green-500 rounded-lg px-4 py-2 flex-1 md:flex-none">
               <p className="text-sm text-gray-600">Aprovadas</p>
               <p className="text-2xl font-bold text-green-600">
                 {approvedCount}
@@ -422,7 +422,7 @@ export function PartnersProposals() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
           <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="bg-black text-white p-6 rounded-t-2xl">
-              <div className="flex items-center justify-between">
+              <div className="flex items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <div className="w-16 h-16 bg-[#FFD700] rounded-lg flex items-center justify-center font-bold text-xl text-black">
                     {selectedProposal.partnerLogo ||
@@ -461,7 +461,7 @@ export function PartnersProposals() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 <div className="bg-gray-50 rounded-lg p-4">
                   <div className="flex items-center gap-2 mb-2">
                     <TrendingUp className="w-5 h-5 text-gray-600" />
@@ -520,17 +520,17 @@ export function PartnersProposals() {
 
               {(selectedProposal.status === "pendente" ||
                 selectedProposal.status === "pending") && (
-                <div className="flex items-center gap-3 pt-4 border-t border-gray-200">
+                <div className="flex flex-col-reverse sm:flex-row sm:items-center gap-3 pt-4 border-t border-gray-200">
                   <button
                     onClick={() => handleReject(selectedProposal.id)}
-                    className="flex-1 px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-semibold flex items-center justify-center gap-2"
+                    className="w-full sm:flex-1 px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors font-semibold flex items-center justify-center gap-2"
                   >
                     <X className="w-5 h-5" />
                     Recusar Proposta
                   </button>
                   <button
                     onClick={() => handleApprove(selectedProposal.id)}
-                    className="flex-1 px-6 py-3 bg-[#FFD700] text-black rounded-lg hover:bg-[#FFC700] transition-colors font-semibold flex items-center justify-center gap-2"
+                    className="w-full sm:flex-1 px-6 py-3 bg-[#FFD700] text-black rounded-lg hover:bg-[#FFC700] transition-colors font-semibold flex items-center justify-center gap-2"
                   >
                     <Check className="w-5 h-5" />
                     Aprovar Proposta
