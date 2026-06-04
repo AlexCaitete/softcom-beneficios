@@ -20,7 +20,7 @@ export default function Home() {
       
       <Apresentacao />
 
-      < Benefits />
+      <Benefits />
 
       <Services />
 

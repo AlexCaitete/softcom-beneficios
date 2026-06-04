@@ -30,7 +30,7 @@ export default function SectionMarcas() {
         <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-gray-900 text-center text-3xl font-bold mb-12">Marcas Parceiras</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {brands.map((brand) => (
               <div key={brand.name} className="flex items-center justify-center p-8 bg-white rounded-2xl border border-gray-200 hover:border-[#FFD700] transition-colors">
                 <img
