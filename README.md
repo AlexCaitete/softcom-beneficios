@@ -1,9 +1,6 @@
 Markdown
 # 📂 Softcom Benefícios - Portal de Vantagens Corporativas
 
-<p align="center">
-  <img src="public/logo.png" alt="Softcom Logo" width="200" style="background-color: white; padding: 10px; border-radius: 8px;" />
-</p>
 
 <p align="center">
   <strong>Solução digital de inteligência e gestão de benefícios institucionais para clientes e colaboradores.</strong>
