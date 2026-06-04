@@ -1,40 +1,33 @@
-import { Link } from "react-router-dom";
-import logoSoftcom from "../../assets/logo.png";
+import womanDiscountImg from "../../assets/woman-discount.png";
 
-export default function Header() {
+export default function Apresentacao() {
   return (
-    <header className="border-b border-gray-200 bg-white sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
-        <Link to="/" className="flex items-center">
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+        <div className="relative">
           <img
-            src={logoSoftcom}
-            alt="Softcom"
-            className="h-10 object-contain"
+            src={womanDiscountImg}
+            alt="Mulher feliz com desconto"
+            className="w-full h-auto object-contain z-10 relative drop-shadow-2xl"
           />
-        </Link>
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 text-sm md:text-base text-center">
-          <Link
-            to="/meus-beneficios"
-            className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors"
-          >
-            Portal do Cliente
-          </Link>
-
-          <Link
-            to="/meu-perfil"
-            className="px-3 py-1 bg-[#FFD700] hover:bg-[#FFC700] font-medium rounded-full transition-colors"
-          >
-            Portal do Funcionário
-          </Link>
-
-          <Link
-            to="/admin"
-            className="px-3 py-1 bg-gray-900 text-white hover:bg-gray-800 font-medium rounded-full transition-colors"
-          >
-            Portal do Administrador
-          </Link>
+        </div>
+        <div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+            Somos a tecnologia que{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FF8C00]">
+              IMPULSIONA
+            </span>{" "}
+            o comércio!
+          </h1>
+          <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+            Bem-vindo ao portal da{" "}
+            <span className="font-bold text-gray-900">Softcom</span>! Aqui, você
+            encontra o melhor em tecnologia para gerenciar o seu negócio. Conte
+            com a Softcom para caminhar ao seu lado rumo ao sucesso! Seja muito
+            bem-vindo!
+          </p>
         </div>
       </div>
-    </header>
+    </section>
   );
 }
