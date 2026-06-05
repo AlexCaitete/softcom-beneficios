@@ -28,7 +28,7 @@ export default function Faq() {
     const [openFaq, setOpenFaq] = useState<number | null>(null);
 
     return (
-        <section className="py-20 bg-gray-50">
+        <section className="py-12 md:py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-center text-3xl font-bold mb-12">FAQ</h2>
           <div className="space-y-4">

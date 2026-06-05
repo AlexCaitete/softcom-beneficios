@@ -23,11 +23,11 @@
 
 export default function Benefits() {
     return (
-        <section className="py-20 bg-gray-50">
+        <section className="py-12 md:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-gray-900 text-center text-3xl font-bold mb-4">Quais os benefícios?</h2>
           <p className="text-center text-gray-600 mb-12">Para nossos clientes e colaboradores</p>
-          <div className="text-gray-900 grid md:grid-cols-2 gap-8">
+          <div className="text-gray-900 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
             {benefits.map((benefit, index) => (
               <div key={index} className="bg-white p-8 rounded-2xl border border-gray-200 hover:border-[#FFD700] transition-colors">
                 <div className="inline-block px-3 py-1 bg-[#FFD700] rounded-full text-sm mb-4">

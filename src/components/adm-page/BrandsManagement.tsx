@@ -69,25 +69,25 @@ export function BrandsManagement() {
   return (
     <section className="py-8">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
           <h2 className="text-3xl font-bold">Gerenciar Marcas Parceiras</h2>
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-full sm:w-auto">
             <button
               onClick={handleReset}
-              className="px-4 py-2 border-2 border-gray-200 text-gray-600 rounded-lg flex items-center gap-2 hover:bg-gray-100 transition-colors"
+              className="flex-1 sm:flex-none px-4 py-2 border-2 border-gray-200 text-gray-600 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors"
             >
               <RotateCcw className="w-5 h-5" /> Resetar
             </button>
             <button
               onClick={() => setShowModal(true)}
-              className="px-4 py-2 bg-black text-white rounded-lg flex items-center gap-2 hover:bg-gray-800 transition-colors"
+              className="flex-1 sm:flex-none px-4 py-2 bg-black text-white rounded-lg flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors"
             >
               <Plus className="w-5 h-5" /> Adicionar Marca
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {brands.map((brand, index) => (
             <div key={index} className="bg-white p-6 rounded-xl border-2 border-gray-100 relative group flex flex-col items-center shadow-sm">
               <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">

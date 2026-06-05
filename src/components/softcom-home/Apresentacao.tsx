@@ -2,8 +2,8 @@ import womanDiscountImg from "../../assets/woman-discount.png";
 
 export default function Apresentacao() {
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+    <section className="py-12 md:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="relative">
           <img
             src={womanDiscountImg}
@@ -11,8 +11,8 @@ export default function Apresentacao() {
             className="w-full h-auto object-contain z-10 relative drop-shadow-2xl"
           />
         </div>
-        <div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+        <div className="text-center md:text-left">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
             Somos a tecnologia que{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFD700] to-[#FF8C00]">
               IMPULSIONA

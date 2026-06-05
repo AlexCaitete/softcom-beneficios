@@ -40,17 +40,17 @@ export function ProfileHeader() {
     const progressToNextLevel = (currentEmployee.points / currentEmployee.nextLevelPoints) * 100;
 
     return(
-        <section className="bg-gradient-to-br from-black via-gray-900 to-black text-white py-12 border-b-4 border-[#FFD700]">
+        <section className="bg-gradient-to-br from-black via-gray-900 to-black text-white py-8 md:py-12 border-b-4 border-[#FFD700]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-6">
-              <div className="w-24 h-24 bg-[#FFD700] rounded-full flex items-center justify-center text-3xl font-bold text-black">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+              <div className="w-24 h-24 bg-[#FFD700] rounded-full flex items-center justify-center text-3xl font-bold text-black flex-shrink-0">
                 {currentEmployee.avatar}
               </div>
               <div>
-                <h1 className="text-4xl font-bold mb-2">{currentEmployee.name}</h1>
-                <p className="text-xl text-gray-300 mb-4">{currentEmployee.role}</p>
-                <div className="flex items-center gap-4">
+                <h1 className="text-3xl sm:text-4xl font-bold mb-2">{currentEmployee.name}</h1>
+                <p className="text-lg sm:text-xl text-gray-300 mb-4">{currentEmployee.role}</p>
+                <div className="flex flex-wrap justify-center sm:justify-start items-center gap-4">
                   <div className="px-4 py-2 bg-[#FFD700] text-black rounded-lg font-bold">
                     Nível {currentEmployee.level}
                   </div>
@@ -64,11 +64,11 @@ export function ProfileHeader() {
               </div>
             </div>
 
-            <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 min-w-[300px]">
+            <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 w-full lg:w-auto lg:min-w-[300px]">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm text-gray-600">Progresso para próximo nível</span>
-                <span className="text-sm font-bold text-gray-600 ml-2">
-                   {pointsToNextLevel} pontos faltam
+                <span className="text-sm text-gray-700">Progresso para próximo nível</span>
+                <span className="text-sm font-bold ml-2 text-gray-700">
+                   {pointsToNextLevel} pts faltam
                 </span>
               </div>
               <div className="w-full bg-white bg-opacity-20 rounded-full h-3 mb-2">
@@ -77,7 +77,7 @@ export function ProfileHeader() {
                   style={{ width: `${progressToNextLevel}%` }}
                 ></div>
               </div>
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-gray-500">
                 Meta: {currentEmployee.nextLevelPoints} pontos
               </p>
             </div>
