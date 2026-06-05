@@ -1,19 +1,13 @@
 import { useState, useEffect } from "react";
+import { defaultBrands } from "../adm-page/BrandsManagement";
 
-const initialBrands = [
-    { name: "Spotify", logo: "https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" },
-    { name: "TikTok", logo: "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" },
-  ];
-  
 export default function SectionMarcas() {
-    const [brands, setBrands] = useState(initialBrands);
+    const [brands, setBrands] = useState(defaultBrands);
 
     useEffect(() => {
         const loadBrands = () => {
             const saved = localStorage.getItem("@softcom:brands");
-            if (saved) {
-                setBrands(JSON.parse(saved));
-            }
+            setBrands(saved ? JSON.parse(saved) : defaultBrands);
         };
 
         loadBrands();

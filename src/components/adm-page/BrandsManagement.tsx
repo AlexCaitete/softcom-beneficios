@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Plus, X, Trash2, Edit2 } from "lucide-react";
+import { Plus, X, Trash2, Edit2, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 
 interface Brand {
@@ -7,9 +7,10 @@ interface Brand {
   logo: string;
 }
 
-const defaultBrands = [
-  { name: "Spotify", logo: "https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" },
-  { name: "TikTok", logo: "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" },
+export const defaultBrands = [
+  { name: "Aiqfome", logo: "https://static.wixstatic.com/media/00f415_8143909f623a4471997a4814bbc10668~mv2.png" },
+  { name: "B2A", logo: "https://www.b2acontencoes.com.br/images/logo-b2a-site.png" },
+  { name: "Marca3", logo: "https://www.ecodebate.com.br/wp-content/uploads/2022/11/20221129-221129-formas-de-fazer-um-logotipo.jpg" }
 ];
 
 export function BrandsManagement() {
@@ -58,17 +59,32 @@ export function BrandsManagement() {
     toast.error("Marca removida");
   };
 
+  const handleReset = () => {
+    if (confirm("Deseja resetar as marcas para as configurações de fábrica? Isso apagará todas as alterações manuais.")) {
+      setBrands(defaultBrands);
+      toast.success("Lista resetada com sucesso!");
+    }
+  };
+
   return (
     <section className="py-8">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold">Gerenciar Marcas Parceiras</h2>
-          <button
-            onClick={() => setShowModal(true)}
-            className="px-4 py-2 bg-black text-white rounded-lg flex items-center gap-2 hover:bg-gray-800 transition-colors"
-          >
-            <Plus className="w-5 h-5" /> Adicionar Marca
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={handleReset}
+              className="px-4 py-2 border-2 border-gray-200 text-gray-600 rounded-lg flex items-center gap-2 hover:bg-gray-100 transition-colors"
+            >
+              <RotateCcw className="w-5 h-5" /> Resetar
+            </button>
+            <button
+              onClick={() => setShowModal(true)}
+              className="px-4 py-2 bg-black text-white rounded-lg flex items-center gap-2 hover:bg-gray-800 transition-colors"
+            >
+              <Plus className="w-5 h-5" /> Adicionar Marca
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
